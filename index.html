@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Amna 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 10px #ff4081, 0 0 20px #ff80ab, 0 0 40px #ff4081;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff4081, 0 0 20px #ff80ab, 0 0 40px #ff4081; }
+      to { text-shadow: 0 0 20px #ff80ab, 0 0 40px #ff4081, 0 0 60px #ff80ab; }
+    }
+
+    .message {
+      font-size: 1.5rem;
+      color: #fff;
+      max-width: 600px;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 4s forwards 3s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle at 30% 30%, #ff80ab, #ff4081);
+      border-radius: 50%;
+      animation: float 10s infinite;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 40px;
+      background: white;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0); opacity: 1; }
+      50% { transform: translateY(-400px) rotate(15deg); opacity: 0.8; }
+      100% { transform: translateY(-800px) rotate(-15deg); opacity: 0; }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 20px;
+      background: gold;
+      opacity: 0.8;
+      top: -20px;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(720deg); }
+    }
+
+    .surprise-text {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 40px;
+      text-align: center;
+      text-shadow: 0 0 10px #ff80ab, 0 0 20px #ff4081, 0 0 40px #ff80ab;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: popIn 2s forwards;
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .funny-btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      background: #ff4081;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff80ab;
+      transition: 0.3s;
+      opacity: 0;
+      animation: fadeIn 2s forwards 7s; /* appears after 7s */
+    }
+
+    .funny-btn:hover {
+      background: #ff80ab;
+      box-shadow: 0 0 20px #ff4081;
+    }
+
+    .gif-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      background: white;
+      padding: 10px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .gif-popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .gif-popup img {
+      max-width: 300px;
+      border-radius: 15px;
+    }
+
+    .close-btn {
+      display: block;
+      margin: 10px auto 0;
+      padding: 8px 16px;
+      border: none;
+      background: #ff4081;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #ff80ab;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>🎂 Happy Birthday Amna 🎂</h1>
+    <p class="message">
+      You are not just my best friend, you are my everything 💕<br>
+      Thank you for being the most special part of my life.<br>
+      Wishing you endless happiness, love, and smiles today and always! 💫
+    </p>
+  </div>
+
+  <!-- Surprise text will be added by JS -->
+  <div id="surprise"></div>
+
+  <!-- Funny button -->
+  <button class="funny-btn" onclick="showGif()">Click for a Funny Surprise 😂</button>
+
+  <!-- GIF Popup -->
+  <div id="gifPopup" class="gif-popup">
+    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Funny Love Gif">
+    <button class="close-btn" onclick="closeGif()">Close ✖</button>
+  </div>
+
+  <script>
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * window.innerWidth + "px";
+      balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+      balloon.style.animationDuration = (6 + Math.random()*4) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.background = `hsl(${Math.random()*360}, 80%, 60%)`;
+      confetti.style.animationDuration = (3 + Math.random()*2) + "s";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 5000);
+    }
+
+    function surprise() {
+      for(let i=0; i<20; i++) setTimeout(createBalloon, i*300);
+      for(let i=0; i<50; i++) setTimeout(createConfetti, i*100);
+
+      // Add surprise glowing text after a short delay
+      setTimeout(() => {
+        const text = document.createElement("div");
+        text.className = "surprise-text";
+        text.innerHTML = "✨ Amna, you make the world brighter just by being in it ✨";
+        document.getElementById("surprise").appendChild(text);
+      }, 3000);
+    }
+
+    // Run surprise automatically after 4 seconds
+    setTimeout(surprise, 4000);
+
+    // Show GIF popup
+    function showGif() {
+      document.getElementById("gifPopup").classList.add("show");
+    }
+
+    // Close GIF popup
+    function closeGif() {
+      document.getElementById("gifPopup").classList.remove("show");
+    }
+  </script>
+</body>
+</html>
